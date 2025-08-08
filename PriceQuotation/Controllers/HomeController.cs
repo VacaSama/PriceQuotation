@@ -18,10 +18,6 @@ namespace PriceQuotation.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -29,7 +25,7 @@ namespace PriceQuotation.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
+        [HttpPost] // Action to handle the form submission
         public IActionResult Index(PriceQuote model)
         {
             model.DiscountAmount = model.Subtotal * model.DiscountPercent / 100;
