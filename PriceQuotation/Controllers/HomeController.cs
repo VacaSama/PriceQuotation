@@ -8,14 +8,26 @@ namespace PriceQuotation.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        // I don't know what this is ...
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        [HttpGet] // Action to display/get the initial form
         public IActionResult Index()
         {
+            ViewBag.discount = 0;
+            ViewBag.total = 0; 
             return View();
+        }
+
+        [HttpPost] // Action to handle the form submission
+        public IActionResult Index(PriceQuote model)
+        {
+            ViewBag.discount = 0;
+            ViewBag.total = 0;
+            return View(model);
         }
 
 
@@ -23,14 +35,6 @@ namespace PriceQuotation.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpPost] // Action to handle the form submission
-        public IActionResult Index(PriceQuote model)
-        {
-            model.DiscountAmount = model.Subtotal * model.DiscountPercent / 100;
-            model.Total = model.Subtotal - model.DiscountAmount;
-            return View(model);
         }
     }
 }

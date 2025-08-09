@@ -1,39 +1,36 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model PriceQuotation.Models.PriceQuote
 
 <div>
     <h1 class="display-4">Price Quotation</h1>
 
-    <!--Form that is needed to make calculations-->
-    <!--How to format them one after the other instead of 
-        side-by-side????
-    -->
-
-    <form>
+    <form method="post">
+        <div>
             <label>Subtotal:</label>
-			<input type="number" id="subtotal"/> <br />
+            <input asp-for="Subtotal" type="number" />
+        </div>
+        <div>
+            <label>Discount Percent:</label>
+            <input asp-for="DiscountPercent" type="number" />
+        </div>
 
-            <label>Discount Percent: </label>
-            <input type = "number" id="discountpercent"/> <br />
+        <!-- this will make the complete total and discount amount appear
+			not visible until the subtotal and discount percent are calculated/on buttonclick
+        -->
+        @if (Model != null && Model.Subtotal > 0 && Model.DiscountPercent > 0)
+        {
+            <div>
+                <label>Discount Amount:</label>
+                <span>@Model.DiscountAmount.ToString("C")</span>
+            </div>
+            <div>
+                <label>Total:</label>
+                <span>@Model.Total.ToString("C")</span>
+            </div>
+        }
 
-            <button>Calculate</button>
-            <a href="/Quotation/Clear">Clear</a>
+        <button type="submit">Calculate</button>
+        <!--<a> links back to the index... thus clearing it-->
+        <a asp-action="Index">Clear</a>
     </form>
-    
-    @*  THE BREAKDOWN - 
-        Using an if statment- '@' allows for the program to recognize C# code being placed into 
-        the Razor Page. 
-
-        Translation: if the Model is not null and the models subtotal and discount percent 
-        have a value. Then format the Discount Amount and Whole Total into a string as currency ("C") in the 
-        HTML form of <p>
-    *@
-
-    @if (Model != null && Model.Subtotal.HasValue && Model.DiscountPercent.HasValue)
-    {
-        <p>Discount Amount: @Model.DiscountAmount.ToString("C")</p>
-        <p>Total: @Model.Total.ToString("C")</p>
-    }
 
 </div>
