@@ -8,7 +8,6 @@ namespace PriceQuotation.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        // I don't know what this is ...
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
